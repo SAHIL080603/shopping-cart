@@ -13,7 +13,7 @@ if(page_r>=pages_r){
 }
 function divert(page){
     buttons.setAttribute('pageno',page);
-    window.location.href=`http://localhost:4000/products/${id_r}?page=${page}`;
+    window.location.href=`https://shopping-cart-tbh7.onrender.com/products/${id_r}?page=${page}`;
 }
 
 prev.addEventListener('click',()=>{

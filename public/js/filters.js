@@ -14,7 +14,7 @@ let pages3=pagination.getAttribute('pages2');
 // console.log(filterform);
 async function filterproducts(search,rating,min,max,sort,page){
     // console.log('inside getproducts');
-    const res=await fetch(`http://localhost:4000/filters?q=${search}&ratingfilter=${rating}&minpricefilter=${min}&maxpricefilter=${max}&sortfilter=${sort}`);
+    const res=await fetch(`https://shopping-cart-tbh7.onrender.com/filters?q=${search}&ratingfilter=${rating}&minpricefilter=${min}&maxpricefilter=${max}&sortfilter=${sort}`);
     const data=await res.json();
     const {products,currentUser}=data;
 

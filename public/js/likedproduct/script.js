@@ -16,7 +16,7 @@ if(page>=pages){
 function divertproducts(page){
     pagination.setAttribute('pageno',page);
 
-    window.location.href=`http://localhost:4000/profile/${userid}/${username}/likedproducts?page=${page}`;
+    window.location.href=`https://shopping-cart-tbh7.onrender.com/profile/${userid}/${username}/likedproducts?page=${page}`;
 }
 
 back.addEventListener('click',()=>{

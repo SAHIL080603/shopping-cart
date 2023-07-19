@@ -11,7 +11,7 @@ let pages2=pagination.getAttribute('pages2');
 
 async function getproducts(searchValue,page){
     console.log(searchValue);
-    const res=await fetch(`http://localhost:4000/profile/${userid2}/${username2}/likedproducts/filters?q=${searchValue}`);
+    const res=await fetch(`https://shopping-cart-tbh7.onrender.com/profile/${userid2}/${username2}/likedproducts/filters?q=${searchValue}`);
     const data=await res.json();
     const {products,currentUser}=data;
     // console.log('hi');

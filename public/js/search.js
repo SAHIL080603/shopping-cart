@@ -10,7 +10,7 @@ let page2=pagination.getAttribute('pageno2');
 let pages2=pagination.getAttribute('pages2');
 
 async function getproducts(searchValue,page){
-    const res=await fetch(`http://localhost:4000/search?q=${searchValue}`);
+    const res=await fetch(`https://shopping-cart-tbh7.onrender.com/search?q=${searchValue}`);
     const data=await res.json();
     const {finalProducts,currentUser}=data;
     // console.log('hi');
