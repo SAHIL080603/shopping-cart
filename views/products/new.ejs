@@ -1,0 +1,32 @@
+<% layout('layout/boilerplate') -%>
+<div class="border p-3 mx-auto w-50">
+    <h1>Add Product</h1>
+    <form class="productForm" action="/products" method="post" enctype="multipart/form-data">
+        <div class="mb-3">
+            <label for="name" class="form-label">Name</label>
+            <input type="text" class="form-control" name="name" id="name">
+        </div>    
+        <div class="mb-3">
+            <label for="price" class="form-label">Price</label>
+            <input type="number" class="form-control" name="price" id="price">
+        </div>   
+        <div class="mb-3">
+            <label for="img" class="form-label">Image (Only png, jpg/jpeg images supported)</label>
+            <input type="file" class="form-control" name="image" id="img" accept="image/png, image/jpeg, image/jpg">
+        </div>    
+        <div class="mb-3">
+            <label for="desc" class="form-label">Description</label>
+            <textarea class="form-control" name="desc" id="desc" rows="3"></textarea>
+        </div> 
+        <button class="btn btn-success btn-sm" id="submitButton">Submit</button>
+    </form>
+</div>
+
+
+
+<div class="spinner-message display">
+    <h2 style="text-align: center; width: 100vw;">Creating Your Product...</h2>
+    <h4 style="text-align: center;">it may take some time..</h4>
+</div>
+
+<script src="/js/new.js"></script>

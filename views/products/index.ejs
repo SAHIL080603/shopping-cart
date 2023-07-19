@@ -1,0 +1,138 @@
+<% layout('layout/boilerplate') -%>
+<a class="btn btn-primary material-symbols-outlined rounded-circle" 
+    style="display: flex; 
+            justify-content: center; 
+            align-items: center;
+            position: fixed; 
+            
+            top: 85vh;
+            /* left: 0; */
+            right: 2vw;
+            margin: auto;
+
+            width: 60px; 
+            height: 60px;
+            box-shadow: 1px 1px 10px black; 
+            z-index: 2;" 
+    data-bs-toggle="offcanvas" href="#filters" role="button" aria-controls="offcanvasExample">
+    filter_alt
+</a>
+<section class="container">
+    <div id="product-space" class="row products">
+        <h4 class="brand display-4 bg-light p-3 rounded d-flex mb-3">
+            <i class="fab fa-shopify" style="margin-right: 20px;"></i>
+            Shopping-Cart
+            <div style="width: 59%; text-align: end;" id="pagination" pageno="<%= page %>" pages="<%= pages %>">
+                <button class="btn btn-lg btn-secondary" id="back"><</button>
+                <button class="btn btn-lg btn-secondary" id="forward">></button>
+            </div>
+        </h4>
+        <% for(let product of products) {%>
+            <div class="col-lg-3 col-md-6 mb-3" id="<%= product._id %>">
+                <div class="card shadow-sm mx-auto position-relative" style="width: 15rem;">
+                    <img src="<%=product.img%>" class="card-img-top" alt="item image">
+                    <span class="badge rounded-pill bg-light text-dark w-35 position-absolute translate-middle-y" style="top:35%;left:5%">
+                        <%  let rating=product.reviews.reduce((sum,review)=>sum+review.rating,0) * 10;
+                            if(rating!==0){
+                                rating=Math.round((rating/product.reviews.length))/10;
+                            }
+                            // ratingArray.push(rating);
+                        %> 
+                        <%= rating %> &star; | 5
+                    </span>
+                    <div class="card-body">
+                      <h5 class="card-title d-flex justify-content-between align-items-center">
+                        <span><%= product.name %></span>
+                        <!-- <span class="btn like-button bg-light rounded-circle"> -->
+                            <% if(currentUser && currentUser.likedProducts && currentUser.likedProducts.includes(product._id)){%>
+                                <a href="/products/<%= product._id %>/like?bool=0" class="btn like-button bg-light rounded-circle" style="color: red;" id="like-button">
+                                    <i  product-id="<%=product._id%>" class="fa fa-heart"></i>
+                                </a>
+                            <% }else{%>
+                                <a href="/products/<%= product._id %>/like?bool=1" class="btn like-button bg-light rounded-circle" style="color: grey;" id="like-button">
+                                    <i  product-id="<%=product._id%>" class="far fa-heart"></i>
+                                </a>
+                            <% } %>
+                        <!-- </span> -->
+                      </h5>
+                      <p class="card-text fw-light"><%= product.desc%></p>
+                      <p class="text-muted"><%= product.reviews.length %> reviews</p>
+                      <h6 class="card-title"><span class="fw-lighter fs-6 text-decoration-line-through">Rs.<%= product.price %></span> Rs.<%= product.price %> <span class="fw-light fs-6 text-warning">( 50 % OFF )</span> </h6>
+                      <a href="/products/<%=product._id%>" class="show-btn btn btn-sm btn-primary">Buy Now</a>
+                    </div>
+                </div>
+            </div>
+        <% } %> 
+    </div>
+
+  
+</section>
+
+
+<div class="offcanvas offcanvas-start" tabindex="-1" id="filters" aria-labelledby="offcanvasExampleLabel">
+    <div class="offcanvas-header">
+      <h5 class="offcanvas-title" id="offcanvasExampleLabel">Filters</h5>
+      <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+      <div>
+        <form action="/filters" id="form-filter">
+            <div class="m-1 mb-3 d-flex justify-content-center align-items-center">
+                <label for="q" class="me-2">Search:</label>
+                <input class="form-control" id="search-input2" type="search" placeholder="Search" aria-label="Search" name="q">
+            </div>
+            
+          
+            <div class="form-floating m-1 mb-3">
+              <select class="form-select" id="ratingfilter" name="ratingfilter">
+                <option selected value="0">None</option>
+                <option value="4">4 and Above..</option>
+                <option value="3">3 and Above..</option>
+                <option value="2">2 and Above..</option>
+                <option value="1">1 and Above..</option>
+              </select>
+              <label for="floatingSelectGrid">Input Rating</label>
+            </div>
+            <!-- <li><hr class="dropdown-divider"></li> -->
+            <fieldset class="m-1">
+              <div class="form-label">Price Range:</div>
+              <div class="mb-1">
+                <label class="form-label" for="minpricefilter">Min:</label>
+                <input class="form-control" type="number" min="0" name="minpricefilter" id="min" placeholder="&#8377 (by default leving blank here=0)">
+              </div>
+              <div>
+                <label class="form-label" for="maxpricefilter">Max:</label>
+                <input class="form-control" type="number" min="0" name="maxpricefilter" id="max" placeholder="&#8377 (by default leving blank here=infinity)">
+              </div>
+              <p class="text-warning display" id="price-range-text">make sure max price is more than min price</p>
+            </fieldset>
+            <!-- <li><hr class="dropdown-divider"></li> -->
+            <div class="form-floating m-1 mt-4">
+              <select class="form-select" id="sortfilter" name="sortfilter">
+                <!-- <option selected>None</option> -->
+                <option value="0" selected>None</option>
+                <option value="1">Oldest to Newest</option>
+                <option value="2">Newest to Oldest</option>
+                <option value="3">A-Z</option>
+                <option value="4">Z-A</option>
+              </select>
+              <label for="floatingSelectGrid">Sort</label>
+            </div>
+            <!-- <li><hr class="dropdown-divider"></li> -->
+            <!-- <li><a class="dropdown-item" href="#">Track your Order</a></li> -->
+            <button class="btn btn-sm btn-success ms-2 mt-3" id="submit-filter"
+            data-bs-toggle="offcanvas" href="#filters" role="button" aria-controls="offcanvasExample"
+            >Apply</button>
+            <a class="btn btn-sm btn-warning ms-2 mt-3" href="/products" id="remove-filter">Remove All filters</a>
+          
+          
+        </form>
+      </div>
+    </div>
+  </div>
+
+
+<!-- <script src="/js/script.js"></script> -->
+<!-- <script src="/js/like.js"></script> -->
+<!-- <script src="/js/filters.js"></script> -->
+<!-- <script src="/js/search.js"></script> -->

@@ -1,0 +1,70 @@
+<nav class="navbar navbar-expand-lg navbar-dark mb-3 sticky-top" style="background-color: #0077b6;">
+    <div class="container">
+      <a class="navbar-brand" href="#">Shopping Cart</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link" href="/">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/products">Products</a>
+          </li>
+          <% if(currentUser && currentUser.userType && currentUser.userType==='retailer') {%>
+            <li class="nav-item">
+              <a class="nav-link" href="/products/new">New</a>
+            </li>
+          <% } %>
+        </ul>
+        <!-- <div class="navbar-nav d-flex"> -->
+          <div class="nav-item d-flex me-4" role="search">
+            <input class="form-control d-inline me-2" id="search-input" type="search" placeholder="Search" aria-label="Search" name="q">
+            <button class="btn btn-outline-light" id="search-button" type="submit">Search</button>
+          </div>
+        <!-- </div> -->
+        
+        
+  
+        <ul class="navbar-nav ml-auto mb-2 mb-lg-0">
+          
+          <% if(!currentUser){ %> 
+            <li class="nav-item">
+              <a class="nav-link" href="/login">Login</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/register">SignUp</a>
+            </li>
+          <%} else{ %>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle text-capitalize" href="profile" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Hi, <%= currentUser.username %>
+              </a>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="/profile/<%= currentUser._id %>/<%= currentUser.username %>">My Profile</a></li>
+                <!-- <li><a class="dropdown-item" href="#">My liked products</a></li> -->
+                <!-- <li><hr class="dropdown-divider"></li> -->
+                <li><a class="dropdown-item" href="#">Purchased Products</a></li>
+                <!-- <li><hr class="dropdown-divider"></li> -->
+                <li><a class="dropdown-item" href="#">Track your Order</a></li>
+              </ul>
+            </li>
+            <!-- <li class="nav-item">
+              <a class="nav-link text-capitalize" href="#">Hi,</a>
+            </li> -->
+            <li class="nav-item">
+              <a href="/products/user/cart" class="nav-link"><i class="fas fa-shopping-cart"></i> 
+                <sup><span class="badge bg-danger"><%=currentUser.cart.length%></span></sup> 
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/logout">Logout</a>
+            </li>
+          <% } %> 
+        </ul>
+      </div>
+    </div>
+  </nav>
+  
+  <!-- <script src="/js/search.js"></script> -->

@@ -1,0 +1,131 @@
+<% layout('layout/boilerplate') -%>
+<section class="container">
+    <div class="row" id="productpage" product_id="<%= product._id %>">
+        <div class="col-lg-6">
+            <div class="col-lg-4">
+                <div class="card mx-auto mb-3" style="width: 23rem;">
+                    <img src="<%=product.img%>" class="card-img-top" alt="<%=product.name%> ">
+                    <div class="card-body">
+                      <h5 class="card-title">
+                        <%=product.name%> 
+                        <% if(currentUser && currentUser.likedProducts && currentUser.likedProducts.includes(product._id)){ %>
+                            <a href="/products/<%= product._id %>/like?bool=0" class="btn like-button bg-light rounded-circle" style="color: red;" id="likebutton">
+                                <i  product-id="<%=product._id%>" class="fa fa-heart"></i>
+                            </a>
+                        <% }else{ %>
+                            <a href="/products/<%= product._id %>/like?bool=1" class="btn like-button bg-light rounded-circle" style="color: grey;" id="likebutton">
+                                <i  product-id="<%=product._id%>" class="far fa-heart"></i>
+                            </a>
+                        
+                        <% } %>
+                      </h5>
+                      <p class="card-text"><%=product.desc%></p>
+                      <h5 class="card-title">Rs.<%=product.price%> </h5>
+                      <a href="#" class="btn btn-sm btn-primary">Buy Now</a>
+                      <form action="/products/<%=product._id%>/cart" method="post" class="d-inline">
+                        <button type="submit" class="btn btn-sm btn-success">Add To Cart</button>
+                      </form>
+                      
+                      <% if((currentUser && product.author && product.author.equals(currentUser._id))){ %>
+                      <a href="/products/<%=product._id%>/edit" class="btn btn-sm btn-secondary">Edit</a>
+                      <form action="/products/<%=product._id%>?_method=DELETE" method="post" class="d-inline">
+                        <button class="btn btn-sm btn-danger">Delete</button>
+                      </form>
+                      <% } %>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <h1>Add a Review</h1>
+            <div class="mb-3">
+                <form action="/products/<%=product._id%>/review" method="post" class="mb-3">
+                    <div class="mb-3">
+                        <fieldset class="starability-growRotate">
+                            <input type="radio" id="no-rate" class="input-no-rate" name="rating" value="0" checked aria-label="No rating." />
+                            <input type="radio" id="first-rate1" name="rating" value=1 />
+                            <label for="first-rate1" title="Terrible">1 star</label>
+                            <input type="radio" id="first-rate2" name="rating" value=2 />
+                            <label for="first-rate2" title="Not good">2 stars</label>
+                            <input type="radio" id="first-rate3" name="rating" value=3 />
+                            <label for="first-rate3" title="Average">3 stars</label>
+                            <input type="radio" id="first-rate4" name="rating" value=4 />
+                            <label for="first-rate4" title="Very good">4 stars</label>
+                            <input type="radio" id="first-rate5" name="rating" value=5 />
+                            <label for="first-rate5" title="Amazing">5 stars</label>
+                        </fieldset>
+                    </div>
+                    <div class="mb-3">
+                        <textarea class="form-control" name="comment" id="commment" rows="3"></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-sm btn-success">Submit</button>
+                </form>
+                <div class="mb-3">
+                    <h1>Costomer Reviews</h1>
+                    <div class="btn-group w-100 mb-3" role="group" aria-label="Basic mixed styles example" id="buttons" pageno="<%= page %>" pages="<%= pages %>">
+                        <button type="button" class="btn btn-primary" id="previous">< Prev</button>
+                        <div class="w-50" style="text-align: center; margin-top: 5px;"><%= page %> of <%= pages %></div>
+                        <button type="button" class="btn btn-primary" id="next">Next ></button>
+                    </div> 
+    
+                    <div id="comments">
+                        <% for(let review of product.reviews){ %>
+                            <div class="card mb-2" id="comment-card">
+                                <div class="card-body">
+                                    <h6 class="text-capitalize"><%= review.author.name %></h6>
+                                    <p class="starability-result" id="review-rating" data-rating="<%= review.rating %>" style="transform: scale(0.6); translate: -30px;">
+                                        Rated: <%= review.rating %> stars
+                                    </p>
+                                    <p class="review-comment"><%=review.comment%></p>
+    
+                                    <% if(currentUser){ %>
+                                    
+                                    <% if(currentUser._id.equals(review.author.userid)){%>
+    
+                                    <form action="/products/<%= product._id %>/review/<%= review._id %>?_method=DELETE" method="post" style="display: inline;">
+                                        <button class="btn btn-sm btn-danger">Delete</button>
+                                    </form>
+                                    
+                                    
+                                    <a  href="#edit" 
+                                        style="margin-left: 10px;" 
+                                        class="edit btn btn-sm btn-primary" 
+                                        rating="<%=review.rating %>" 
+                                        comment="<%=review.comment%>" 
+                                        action="/products/<%=product._id%>/review/<%=review._id%>">Edit</a>
+                            
+                                    <% } }%>
+                                </div>
+                            
+                            </div>
+    
+                            
+                            
+                            
+                            
+                        <% } %>  
+                    </div> 
+                </div>
+            </div>
+    
+        </div>
+    </div>
+    
+</section>
+
+
+<form action="" method="post" class="form form-display" id="edit">
+    <div style="display: flex; justify-content: space-between;">
+        <h2 style="display: inline;">Edit your Review</h2> 
+        <button class="close" type="button">X</button>
+    </div>
+    
+    <div class="mb-3">
+        <label for="rating">Rating:</label>
+        <input type="number" min="1" max="5" name="rating" class="edit-rating"> /5
+    </div>
+    <div class="mb-3">
+        <textarea class="form-control edit-comment" name="comment" id="commment" rows="3"></textarea>
+    </div>
+    <button type="submit" class="btn btn-sm btn-success">Save</button>
+</form>

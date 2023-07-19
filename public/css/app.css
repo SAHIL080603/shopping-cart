@@ -1,0 +1,173 @@
+:root{
+    --main-color:#0077b6;
+}
+.navbar-name{
+    color: white;
+}
+.navbar-name:hover{
+    color: white;
+}
+.navbar-brand{
+    font-family: 'Orbitron', sans-serif;
+    /* letter-spacing: 0.1em; */
+}
+.brand{
+    font-family: 'Orbitron', sans-serif;
+    /* letter-spacing: 0.1em; */
+    font-weight: bold;
+}
+
+/* .products{
+    background-color: aqua;
+    
+} */
+
+.products .card img{
+    height: 165px;
+    /* padding: 10px; */
+}
+
+.show-btn{
+    background-color: var(--main-color);
+    color:white;
+}
+
+.show-btn:hover{
+    background-color: black;
+    color: white;
+}
+
+.btn:focus {
+    outline: none;
+    box-shadow: none;
+}
+
+
+.form-display{
+  display: none;
+  
+}
+
+.form{
+  z-index: 1;
+  background-color: white;
+  border: 1px solid black;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  /* bottom: 0vh; */
+  margin: auto;
+  height: fit-content;
+  /* top: 0; */
+  /* top:30px; */
+  /* left:26.5vw; */
+  /* inset: 30px auto; */
+  /* margin: 20px auto; */
+  /* margin: 20px; */
+  padding: 20px;
+  width: 40vw;
+  box-shadow: 0px 0px 20px;
+  border-radius: 20px;
+  transition: top 2s;
+}
+
+.productpage{
+  pointer-events: none;
+}
+
+.close{
+  width: 40px;
+  height: 40px;
+  background-color: white;
+  border-radius: 10px;
+  border: 0px;
+}
+.close:hover{
+  cursor: pointer;
+  background-color: gainsboro;
+  /* border: 1px solid gainsboro; */
+}
+
+.body{
+  filter: grayscale(0.5);
+}
+
+
+/*Spinner Animation*/
+.spinner-message{
+  animation: fade 2s ease-in-out infinite both;
+  animation-direction: alternate;
+  /* animation: name duration timing-function delay iteration-count direction fill-mode; */
+  z-index: 2;
+  position: fixed;
+  /* filter: opacity(0.3); */
+  /* background-color: #0077b6; */
+  top:0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  padding-top: 100px;
+  height: 20vh;
+  /* width: 100vw; */
+  /* height: 100vh; */
+}
+@keyframes fade {
+  0%{
+    /* transform: scale(1.1); */
+    filter: opacity(0.3);
+    /* opacity: 0.33; */
+  }
+}
+
+.spinner {
+  animation: rotate 2s linear infinite;
+  z-index: 2;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto;
+  width: 70px;
+  height: 70px;
+  
+  & .path {
+    stroke: var(--main-color);
+    stroke-linecap: round;
+    animation: dash 1.5s ease-in-out infinite;
+  }
+}
+.display{
+  display: none;
+}
+
+@keyframes rotate {
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes dash {
+  0% {
+    stroke-dasharray: 1, 150;
+    stroke-dashoffset: 0;
+  }
+  50% {
+    stroke-dasharray: 90, 150;
+    stroke-dashoffset: -35;
+  }
+  100% {
+    stroke-dasharray: 90, 150;
+    stroke-dashoffset: -124;
+  }
+}
+
+
+/* -------------------------------------------------------------- */
