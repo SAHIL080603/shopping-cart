@@ -31,7 +31,7 @@ async function filterproducts(search,rating,min,max,sort,page){
 
     let str=`<h4 class="brand display-4 bg-light p-3 rounded mb-3 d-flex">
                 <i class="fab fa-shopify" style="margin-right: 20px;"></i>
-                Liked Products
+                Shopping-Cart
                 <div style="width: 59%; text-align: end;" id="pagination2" pageno2="${page}" pages2="${pages}">
                     <button class="btn btn-lg btn-secondary" id="back2"><</button>
                     <button class="btn btn-lg btn-secondary" id="forward2">></button>
