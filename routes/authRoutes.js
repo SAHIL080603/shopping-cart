@@ -32,7 +32,12 @@ router.get('/profile/:userid/:username/likedproducts',isLoggedIn,isSameUser,asyn
         // console.log(skip);
         // console.log(limit);
         
-        const user=await User.findById(userid,{likedProducts:{$slice:[skip, limit]}}).populate('likedProducts');
+        const user=await User.findById(userid,{likedProducts:{$slice:[skip, limit]}}).populate({
+            path:'likedProducts',
+            populate:{
+                path:'reviews',
+            }
+        });
         const currentUser=req.user;
         // console.log(user.likedProducts);
         res.render('auth/likedproducts',{user,page,pages,currentUser});
@@ -47,7 +52,12 @@ router.get('/profile/:userid/:username/likedproducts/filters',isLoggedIn,isSameU
     let {q,ratingfilter,minpricefilter,maxpricefilter,sortfilter}=req.query;
     const {userid,username}=req.params;
     try{
-        const tempuser=await User.findById(userid).populate('likedProducts');
+        const tempuser=await User.findById(userid).populate({
+            path:'likedProducts',
+            populate:{
+                path:'reviews',
+            }
+        });
         if(tempuser.username!=username){
             throw new Error('User with such username DNE');
         }
@@ -73,7 +83,7 @@ router.get('/profile/:userid/:username/likedproducts/filters',isLoggedIn,isSameU
         
         const finalProducts=[];
         for(let product of tempuser2){
-            let rating=product.reviews.reduce((sum,review)=>sum+review.rating,0) * 10;
+            let rating=parseFloat(product.reviews.reduce((sum,review)=>sum+review.rating,0) * 10);
                 if(rating!==0){
                     rating=Math.round((rating/product.reviews.length))/10;
                 }
@@ -89,10 +99,13 @@ router.get('/profile/:userid/:username/likedproducts/filters',isLoggedIn,isSameU
         const finalProducts2=[]
         for(let product of finalProducts){
             // console.log(product);
-            if(minpricefilter=='' && maxpricefilter==''){
+            if(!minpricefilter || !maxpricefilter){
+                finalProducts2.push(product);
+            }else if(minpricefilter=='' && maxpricefilter==''){
                 minpricefilter=0;
                 x = 1.797693134862315E+308;
                 maxpricefilter = x * 1.001;
+                
                 // break;
             }
             else if(minpricefilter=='' && maxpricefilter!=''){
@@ -129,7 +142,7 @@ router.get('/profile/:userid/:username/likedproducts/filters',isLoggedIn,isSameU
             products:products,
             currentUser:currentUser,
         }
-        // console.log(products);
+        // console.log(finalProducts3);
         // req.flash('success','filter applied');
         res.status(200).json(result);
 

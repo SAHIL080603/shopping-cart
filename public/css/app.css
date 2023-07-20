@@ -27,6 +27,25 @@
     /* padding: 10px; */
 }
 
+#rating-pill{
+  top:5%;left:5%
+}
+
+.indexCard{
+  width: 15rem;
+}
+
+@media screen and (max-width: 480px) {
+  
+  #index-cardtext{
+    display: none;
+  }
+  .indexCard{
+    width: 45vw;
+    /* background-color: red; */
+  }
+}
+
 .show-btn{
     background-color: var(--main-color);
     color:white;
@@ -171,3 +190,62 @@
 
 
 /* -------------------------------------------------------------- */
+
+#newform{
+  width: 50%;
+}
+
+@media screen and (max-width: 600px) {
+  #newform {
+      width: 90%;
+      /* background-color: aqua; */
+  }
+}
+
+#editform{
+  width: 50%;
+}
+
+@media screen and (max-width: 600px) {
+  #editform {
+      width: 90%;
+      /* background-color: aqua; */
+  }
+}
+
+#loginform{
+  width: 50%;
+}
+
+@media screen and (max-width: 600px) {
+  #loginform {
+      width: 90%;
+      /* background-color: aqua; */
+  }
+}
+
+
+
+@media screen and (max-width: 600px) {
+  #signupform {
+      width: 90%;
+      /* background-color: aqua; */
+  }
+}
+@media screen and (max-width: 600px) {
+  #edituserform {
+      width: 90%;
+      /* background-color: aqua; */
+  }
+}
+
+#showcard{
+  width: 23rem;
+}
+
+@media screen and (max-width: 600px) {
+  #showcard {
+      width: 94vw;
+      /* background-color: aqua; */
+  }
+}

@@ -64,24 +64,24 @@ async function filterproducts(search,rating,min,max,sort,page){
         
         
                 
-        str+=`<div class="col-lg-3 col-md-6 mb-3" id="${ product._id }">
-                <div class="card shadow-sm mx-auto position-relative" style="width: 15rem;">
-                    <img src="${product.img}" class="card-img-top" alt="item image">
-                    <span class="badge rounded-pill bg-light text-dark w-35 position-absolute translate-middle-y" style="top:35%;left:5%">
-                        ${ rating } &star; | 5
-                    </span>
-                    <div class="card-body">
-                      <h5 class="card-title d-flex justify-content-between align-items-center">
-                        <span>${ product.name }</span>
-                        ${temp}
-                      </h5>
-                      <p class="card-text fw-light">${ product.desc}</p>
-                      <p class="text-muted">${ product.reviews.length } reviews</p>
-                      <h6 class="card-title"><span class="fw-lighter fs-6 text-decoration-line-through">Rs.${ product.price }</span> Rs.${ product.price } <span class="fw-light fs-6 text-warning">( 50 % OFF )</span> </h6>
-                      <a href="/products/${product._id}" class="show-btn btn btn-sm btn-primary">Buy Now</a>
-                    </div>
+        str+=`<div class="col-lg-3 col-md-6 col-6 mb-3" id="${ product._id }">
+            <div class="card shadow-sm mx-auto position-relative indexCard">
+                <img src="${product.img}" class="card-img-top" alt="item image">
+                <span class="badge rounded-pill bg-light text-dark w-35 position-absolute translate-middle-y" id="rating-pill">
+                    ${ rating } &star; | 5
+                </span>
+                <div class="card-body">
+                  <h5 class="card-title d-flex justify-content-between align-items-center">
+                    <span>${ product.name }</span>
+                    ${temp}
+                  </h5>
+                  <p class="card-text fw-light" id="index-cardtext">${ product.desc}</p>
+                  <p class="text-muted">${ product.reviews.length } reviews</p>
+                  <h6 class="card-title"><span class="fw-lighter fs-6 text-decoration-line-through">Rs.${ product.price }</span> Rs.${ product.price } <span class="fw-light fs-6 text-warning">( 50 % OFF )</span> </h6>
+                  <a href="/products/${product._id}" class="show-btn btn btn-sm btn-primary">Buy Now</a>
                 </div>
-              </div>`;
+            </div>
+        </div>`;
     }
     productSpace2.innerHTML=str;
     spinner2.classList.toggle('display');

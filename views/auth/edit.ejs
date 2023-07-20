@@ -1,6 +1,6 @@
 <% layout('layout/boilerplate') -%>
 
-<div class="border p-3 mx-auto w-50">
+<div class="border p-3 mx-auto" id="newform">
     <h1>Edit user</h1>
     <form action="/profile/<%= user._id %>/<%= user.username %>/edit?_method=PATCH" method="post">
         <div class="mb-3">
